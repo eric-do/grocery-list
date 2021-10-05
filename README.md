@@ -100,6 +100,12 @@ Inserts a grocery item.
 | ------------- | ------------- | ------------- |
 | id | integer | ID of grocery item |
 
+#### Status codes
+| Status | Description |
+| ------------- | ------------- |
+| 201 | Item successfully inserted |
+| 400 | Bad request |
+
 #### Example usage
 ```javascript
 // Promises
@@ -115,6 +121,11 @@ console.log(data.id)
 ```
 ### ```GET /api/groceries```
 Gets all groceries.
+#### Status codes
+| Status | Description |
+| ------------- | ------------- |
+| 200 | Query was successful |
+| 500 | Internal server error |
 #### Example usage
 ```javascript
 // Promises
@@ -126,7 +137,40 @@ const { data } = await axios.get('/api/groceries')
 console.log(data)
 ```
 
+Example response
+```
+[
+  {
+    id: 1,
+    item: 'apple',
+    quantity: 5
+  },
+  {
+    id: 2,
+    item: 'banana',
+    quantity: 6
+  }
+]
+```
+
+### ```DELETE /api/groceries/:id```
+Deletes a grocery item by ID.
+
+
+#### Status codes
+| Status | Description |
+| ------------- | ------------- |
+| 200 | Query was successful |
+| 500 | Internal server error |
+#### Example usage
+```javascript
+axios.delete('/api/groceries/1')
+```
 ### ```POST /api/groceries/seed```
 Resets DB to its original state with 2 grocery items.
-
 No query parameters needed.
+#### Status codes
+| Status | Description |
+| ------------- | ------------- |
+| 200 | Query was successful |
+| 500 | Internal server error |
