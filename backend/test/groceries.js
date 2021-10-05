@@ -22,6 +22,19 @@ describe('Groceries', () => {
       expect(response.status).to.eql(201);
       expect(response.body).to.have.keys('id');
     });
+
+    it("should accept quantity as string", async () => {
+      const response = await request(app)
+                              .post("/api/groceries")
+                              .send({
+                                ...testGrocery,
+                                quantity: '5'
+                              })
+                              .set({ 'Content-Type': 'application/json' });
+
+      expect(response.status).to.eql(201);
+      expect(response.body).to.have.keys('id');
+    });
   })
 
   describe("GET /api/groceries", () => {
@@ -35,6 +48,26 @@ describe('Groceries', () => {
       expect(response.status).to.eql(200);
       expect(response.body).to.be.an.instanceOf(Array)
       expect(response.body[0]).to.have.keys('id', 'item', 'quantity');
+    });
+  })
+
+  describe("DELETE /api/groceries/:id", () => {
+    it("Should delete grocery item by ID", async () => {
+      const response = await request(app)
+        .post("/api/groceries")
+        .send(testGrocery)
+        .set({ 'Content-Type': 'application/json' });
+
+      const { id } = response.body;
+      const originalGetResponse = await request(app).get("/api/groceries");
+      const { length: originalLength } = originalGetResponse.body;
+
+      await request(app).delete(`/api/groceries/${id}`);
+
+      const updatedResponse = await request(app).get("/api/groceries");
+      const { length: updatedLength } = updatedResponse.body;
+
+      expect(originalLength - updatedLength).to.eql(1);
     });
   })
 

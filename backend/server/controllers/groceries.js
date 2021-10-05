@@ -22,6 +22,19 @@ const addGrocery = async (req, res, next) => {
   }
 }
 
+const deleteGrocery = async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id)
+
+  try {
+    res.locals.data = await GroceryModel.deleteGrocery(id)
+    res.status(200);
+    next();
+  } catch (err) {
+    next(new BadRequestError(err));
+  }
+}
+
 const resetGroceries = async (req, res, next) => {
   try {
     await GroceryModel.resetGroceries();
@@ -35,5 +48,6 @@ const resetGroceries = async (req, res, next) => {
 module.exports = {
   getGroceries,
   addGrocery,
+  deleteGrocery,
   resetGroceries
 }

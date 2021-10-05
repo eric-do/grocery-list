@@ -2,6 +2,14 @@
 
 This is the backend for a simple grocery list application.
 
+The current deployment is on domain:
+```
+https://hrsf-grocery-list.herokuapp.com/
+```
+i.e. groceries API is available at
+```
+https://hrsf-grocery-list.herokuapp.com/api/groceries
+```
 ## Tech stack
 - Server: Node/Express
 - Database: Postgres
@@ -17,6 +25,10 @@ From the ```/backend/db/migrations``` directory:
 psql groceries < 00_init.sql
 ```
 
+In the `backend` directory, create a `.env` file with a DATABASE_URL variable
+```
+DATABASE_URL=postgres://postgres@localhost:5432/groceries
+```
 ### Testing
 Tests can be ran from ```/backend```:
 ```
@@ -24,6 +36,7 @@ npm test
 ```
 
 ## Deployment
+This section is for anyone who wants to create their own deployment of the application. It assumes the developer already has Heroku CLI configured.
 ### Connect app to Heroku
 1. Fork this application to your Github account
 2. Create a new app on Heroku, e.g. `hrsf-grocery-list`
@@ -48,7 +61,9 @@ heroku pg:push <LOCAL DB NAME> <PSQL ADD-ON NAME> --app <APP NAME>
 # Example
 heroku pg:push groceries postgresql-convex-03452 --app hrsf-grocery-list
 ```
-Following the add-on of Heroku Postgres, the `DATABASE_URL` environment variable will be added to deployment. It's already configured in the app code.
+The `DATABASE_URL` environment variable is automatically added with the Heroku Postgres add-on.
+
+This app code already references the environment variable.
 
 ### Enable automatic deployment
 At this point automatic deployment can be enabled so deploys happen automatically when code is merged to `master`. You may need to do a manual deployment first.
