@@ -22,7 +22,18 @@ const addGrocery = async (req, res, next) => {
   }
 }
 
+const resetGroceries = async (req, res, next) => {
+  try {
+    await GroceryModel.resetGroceries();
+    res.status(200);
+    next()
+  } catch(err) {
+    next(new InternalServerError(err));
+  }
+}
+
 module.exports = {
   getGroceries,
-  addGrocery
+  addGrocery,
+  resetGroceries
 }

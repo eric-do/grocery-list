@@ -38,49 +38,19 @@ describe('Groceries', () => {
     });
   })
 
-  // xdescribe("GET /api/rides/:id", () => {
+  describe("POST /api/groceries/seed", () => {
+    it("Should reset DB to original state", async () => {
+      await request(app)
+        .post("/api/groceries")
+        .send(testGrocery)
+        .set({ 'Content-Type': 'application/json' });
 
-  //   it("Should respond to the GET method", async () => {
-  //     const insertResponse = await request(app)
-  //                             .post("/api/rides")
-  //                             .send({ ride: testRide })
-  //                             .set({
-  //                               'Authorization': 'Bearer ' + jwt,
-  //                               'Content-Type': 'application/json'
-  //                             });
+      await request(app).post("/api/groceries/seed");
 
-  //     const { id } = insertResponse.body.ride;
-  //     const response = await request(app).get(`/api/rides/${id}`);
-  //     expect(response.status).to.eql(200);
-  //     expect(response.body).to.have.keys(
-  //       'title', 'type', 'metadata',
-  //       'ratings', 'intervals', 'timeInSeconds', 'id'
-  //     );
-  //   });
-
-  //   it("Should increment ride count", async () => {
-  //     const oldRows = await query(getRides);
-  //     const oldCount = oldRows.length;
-
-  //     const rows = await query(insertRide, [
-  //       testRide.type,
-  //       testRide.title,
-  //       testRide.metadata.rideCount,
-  //       testRide.ratings.likes,
-  //       testRide.ratings.total,
-  //       testRide.timeInSeconds,
-  //       JSON.stringify(testRide.intervals)
-  //     ]);
-
-  //     const id = rows[0].id;
-
-  //     const { body: oldRide } = await request(app).get(`/api/rides/${id}`);
-  //     expect(oldRide.metadata.rideCount).to.eql(0)
-
-  //     await request(app).post(`/api/rides/${id}/ride-count`);
-
-  //     const { body: newRide } = await request(app).get(`/api/rides/${id}`);
-  //     expect(newRide.metadata.rideCount).to.eql(1)
-  //   });
-  // })
+      const response = await request(app).get("/api/groceries");
+      expect(response.status).to.eql(200);
+      expect(response.body).to.be.an.instanceOf(Array)
+      expect(response.body.length).to.eql(2);
+    });
+  })
 })

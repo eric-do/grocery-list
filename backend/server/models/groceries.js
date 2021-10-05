@@ -22,7 +22,24 @@ const addGrocery = async (grocery) => {
   return rows[0];
 }
 
+const resetGroceries = async () => {
+  const groceries = [
+    {
+      item: 'apple',
+      quantity: 5
+    },
+    {
+      item: 'banana',
+      quantity: 6
+    }
+  ]
+
+  await query(`TRUNCATE TABLE groceries`);
+  await Promise.all(groceries.map(grocery => addGrocery(grocery)))
+}
+
 module.exports = {
   getGroceries,
-  addGrocery
+  addGrocery,
+  resetGroceries
 }
