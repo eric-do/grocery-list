@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const {
   getGroceries,
-  addGrocery
+  addGrocery,
+  resetGroceries
 } = require('../controllers/groceries');
 const responseHandler = require('../middleware/responseHandler');
 
@@ -17,5 +18,11 @@ router.post(
   addGrocery,
   responseHandler
 );
+
+router.post(
+  '/seed',
+  resetGroceries,
+  responseHandler
+)
 
 module.exports = router;
