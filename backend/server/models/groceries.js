@@ -22,6 +22,16 @@ const addGrocery = async (grocery) => {
   return rows[0];
 }
 
+const deleteGrocery = async (id) => {
+  const q = `
+    DELETE FROM groceries
+    WHERE id = $1
+  `
+
+  const rows = await query(q, [id]);
+  return rows[0];
+}
+
 const resetGroceries = async () => {
   const groceries = [
     {
@@ -41,5 +51,6 @@ const resetGroceries = async () => {
 module.exports = {
   getGroceries,
   addGrocery,
+  deleteGrocery,
   resetGroceries
 }

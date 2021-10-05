@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   getGroceries,
   addGrocery,
-  resetGroceries
+  resetGroceries,
+  deleteGrocery
 } = require('../controllers/groceries');
 const responseHandler = require('../middleware/responseHandler');
 
@@ -16,6 +17,12 @@ router.get(
 router.post(
   '/',
   addGrocery,
+  responseHandler
+);
+
+router.delete(
+  '/:id',
+  deleteGrocery,
   responseHandler
 );
 
